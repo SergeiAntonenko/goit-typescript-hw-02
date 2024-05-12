@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #3609c7;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.header-form {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.header-input {
+  padding: 5px 10px 5px 22px;
+  width: 100%;
+}
+
+.header-input:focus {
+  outline: 2px solid #ac91ff;
+}
+
+.header-btn {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 8px;
+  left: 5px;
+}
+
+.header-btn-ikon {
+  color: #646464;
+}
+
+.header-btn-ikon:hover,
+.header-btn-ikon:focus {
+  color: #000000;
+}
