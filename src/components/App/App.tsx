@@ -1,31 +1,40 @@
 import { useEffect, useState } from "react";
-import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
-import ImageGallery from "../ImageGallery/ImageGallery.jsx";
-import ImageModal from "../ImageModal/ImageModal.jsx";
-import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn.jsx";
-import Loader from "../Loader/Loader.jsx";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import { fetchImages } from "../../api/images.js";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import ImageModal from "../ImageModal/ImageModal";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import Loader from "../Loader/Loader";
+import SearchBar from "../SearchBar/SearchBar";
+import { fetchImages } from "../../api/images";
 import css from "./App.module.css";
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [tapImage, setTapImage] = useState(null);
-  const [totalImages, setTotalImages] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+interface Image {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  alt_description: string;
+}
 
-  const openModal = (imageUrl) => {
+function App() {
+  const [images, setImages] = useState<Image[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [tapImage, setTapImage] = useState<string>("");
+  const [totalImages, setTotalImages] = useState<number>(0);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const openModal = (imageUrl: string) => {
     setTapImage(imageUrl);
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    setTapImage(null);
+    setTapImage("");
     setIsOpen(false);
   };
 
@@ -44,11 +53,11 @@ function App() {
               setError("");
             }
           } else {
-            setError(true);
+            setError("Error fetching images");
           }
         } catch (error) {
           console.log(error);
-          setError(true);
+          setError("Error fetching images");
         } finally {
           setIsLoading(false);
         }
@@ -57,7 +66,7 @@ function App() {
     }
   }, [query, page]);
 
-  const handleSubmit = (newQuery) => {
+  const handleSubmit = (newQuery: string) => {
     if (newQuery === query) {
       return;
     }
@@ -73,7 +82,7 @@ function App() {
   };
 
   return (
-    <div className={css["container"]}>
+    <div className={css.container}>
       <SearchBar onSubmit={handleSubmit} />
       <ImageGallery images={images} openModal={openModal} />
       {isSubmitted && error && !isLoading && <ErrorMessage message={error} />}

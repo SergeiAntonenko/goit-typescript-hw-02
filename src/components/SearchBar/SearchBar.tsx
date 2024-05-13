@@ -1,13 +1,17 @@
-import { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
-  const [query, setQuery] = useState("");
+interface Props {
+  onSubmit: (query: string) => void;
+}
 
-  const handleSubmit = (e) => {
+const SearchBar: React.FC<Props> = ({ onSubmit }) => {
+  const [query, setQuery] = useState<string>("");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim() === "") {
       toast.error("Please enter a search query");
@@ -19,7 +23,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <>
-      <header className={css["header"]}>
+      <header className={css.header}>
         <form className={css["header-form"]} onSubmit={handleSubmit}>
           <input
             className={css["header-input"]}

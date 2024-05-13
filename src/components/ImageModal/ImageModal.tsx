@@ -1,8 +1,15 @@
+import React from "react";
 import Modal from "react-modal";
 
 import css from "./ImageModal.module.css";
 
-const ImageModal = ({ isOpen, closeModal, imageUrl }) => {
+interface Props {
+  isOpen: boolean;
+  closeModal: () => void;
+  imageUrl: string;
+}
+
+const ImageModal: React.FC<Props> = ({ isOpen, closeModal, imageUrl }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -28,7 +35,7 @@ const ImageModal = ({ isOpen, closeModal, imageUrl }) => {
         },
       }}
     >
-      <img className={css["modalImage"]} src={imageUrl} alt="image" />
+      <img className={css.modalImage} src={imageUrl} alt="image" />
     </Modal>
   );
 };
